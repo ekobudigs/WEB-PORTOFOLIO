@@ -1,4 +1,43 @@
- 
+
+// change tahun sekarang
+
+const year = new Date().getFullYear();
+const footerCopy = document.querySelector('.footer__copy');
+footerCopy.innerHTML = `&#169; ${year} Eko Budi. All rights reserved.`;
+
+// optimasi image
+
+window.addEventListener('load', function() {
+  var lazyImages = [].slice.call(document.querySelectorAll('.lazy'));
+
+  if ('IntersectionObserver' in window) {
+    var lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var lazyImage = entry.target;
+          var imageUrl = lazyImage.dataset.src + '?v=' + Date.now(); // Tambahkan timestamp unik
+          lazyImage.src = imageUrl;
+          lazyImageObserver.unobserve(lazyImage);
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage);
+    });
+  } else {
+    // Fallback for browsers that don't support IntersectionObserver
+    lazyImages.forEach(function(lazyImage) {
+      lazyImage.src = lazyImage.dataset.src;
+    });
+  }
+});
+
+
+
+
+
+
 //mode dark
 
  var content = document.getElementsByTagName('body')[0];
