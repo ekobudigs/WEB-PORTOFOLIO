@@ -72,3 +72,35 @@ contactForm.addEventListener("submit", function (e) {
     })
     .catch((e) => alert("Error occured"));
 });
+
+
+$.getJSON('https://api.ipify.org?format=json', function(data) {
+  console.log('Your IP address is: ', data.ip);
+
+  $.getJSON(`https://ipinfo.io/${data.ip}/json?token=82d64b35835cc7`, function(ipInfo) {
+    console.log('IP Info: ', ipInfo);
+
+    var postData = {
+      "ip": ipInfo.ip,
+      "city": ipInfo.city,
+      "region": ipInfo.region,
+      "country": ipInfo.country,
+      "loc": ipInfo.loc,
+      "org": ipInfo.org,
+      "timezone": ipInfo.timezone
+    };
+
+    $.ajax({
+      url: 'https://script.google.com/macros/s/AKfycbyWZsLgVpHrFwYiQWajQhLyA779MOl6yzM1jrKeqmKWuU7kFy4Re_e9CAk4oCBFO1w/exec',
+      type: 'POST',
+      data: JSON.stringify(postData),
+      contentType: 'application/json',
+      success: function(response) {
+        console.log('Data successfully posted:', response);
+      },
+      error: function(error) {
+        console.log('Error posting data:', error);
+      }
+    });
+  });
+});
