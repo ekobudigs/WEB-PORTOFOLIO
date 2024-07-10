@@ -72,3 +72,5 @@ contactForm.addEventListener("submit", function (e) {
     })
     .catch((e) => alert("Error occured"));
 });
+
+ // Mendapatkan alamat IP pengguna
