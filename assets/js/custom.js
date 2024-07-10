@@ -87,7 +87,7 @@ fetch('https://api.ipify.org?format=json')
   fetch(`https://ipinfo.io/${data.ip}/json?token=82d64b35835cc7`)
     .then(response => response.json())
     .then(ipInfo => {
-  
+      let now = new Date();
       // Membuat objek FormData
       const formData = new FormData();
       formData.append('ip', ipInfo.ip);
@@ -98,6 +98,7 @@ fetch('https://api.ipify.org?format=json')
       formData.append('org', ipInfo.org);
       formData.append('timezone', ipInfo.timezone);
       formData.append('tipe', 'Porto');
+      formData.append('jam', now);
 
       // Mengirim data ke Google Apps Script
       fetch('https://script.google.com/macros/s/AKfycbyWZsLgVpHrFwYiQWajQhLyA779MOl6yzM1jrKeqmKWuU7kFy4Re_e9CAk4oCBFO1w/exec', {
