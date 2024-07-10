@@ -72,3 +72,45 @@ contactForm.addEventListener("submit", function (e) {
     })
     .catch((e) => alert("Error occured"));
 });
+
+
+     // Mendapatkan alamat IP pengguna
+     fetch('https://api.ipify.org?format=json')
+     .then(response => response.json())
+     .then(data => {
+      
+       
+       // Mengambil informasi IP lebih lanjut
+       fetch(`https://ipinfo.io/${data.ip}/json?token=82d64b35835cc7`)
+         .then(response => response.json())
+         .then(ipInfo => {
+          
+     
+           // Membuat objek FormData
+           const formData = new FormData();
+           formData.append('ip', ipInfo.ip);
+           formData.append('city', ipInfo.city);
+           formData.append('region', ipInfo.region);
+           formData.append('country', ipInfo.country);
+           formData.append('loc', ipInfo.loc);
+           formData.append('org', ipInfo.org);
+           formData.append('timezone', ipInfo.timezone);
+     
+           // Mengirim data ke Google Apps Script
+           fetch('https://script.google.com/macros/s/AKfycbyWZsLgVpHrFwYiQWajQhLyA779MOl6yzM1jrKeqmKWuU7kFy4Re_e9CAk4oCBFO1w/exec', {
+             method: 'POST',
+             body: formData
+           })
+           .then(response => response.json())
+           .then(result => {
+             console.log('Data successfully posted:');
+           })
+           .catch(error => {
+             console.error('Error posting data:', error);
+           });
+         });
+     })
+     .catch(error => {
+       console.error('Error fetching IP address:', error);
+     });
+     
